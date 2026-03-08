@@ -1,0 +1,54 @@
+# usectl
+
+> usectl is a deployment platform where AI agents do everything. One prompt deploys your entire project — server, database, storage, SSL, custom domain.
+
+## What is usectl?
+
+usectl is a self-hosted Railway/Render alternative built on K3s (Kubernetes). It provides full-stack deployment for any project: container hosting, PostgreSQL database, S3-compatible storage (MinIO), automatic SSL via Let's Encrypt, custom domains, and push-to-deploy from GitHub. Everything is managed through a CLI designed for AI agents.
+
+## Key Facts
+
+- Price: $39/month per project, everything included
+- Founding members: $25/month locked in forever
+- Free during beta
+- Tech stack: Go API, K3s, Kaniko, CloudNativePG, MinIO, Traefik, Hetzner bare metal
+- Built by systemctl (Tbilisi, Georgia)
+- Open source: https://github.com/systemctl-pro/usectl
+
+## How to Deploy
+
+1. Install: `curl -fsSL https://usectl.com/install.sh | bash`
+2. Login: `usectl login`
+3. Connect GitHub: `usectl github login`
+4. Create project: `usectl projects create --name my-app --repo https://github.com/user/repo --domain my-app --port 3000`
+5. Deploy: `usectl projects deploy <project-id>`
+6. Live at: `https://my-app.usectl.app`
+
+## Agent Integration
+
+usectl supports four integration methods for AI agents:
+
+1. **CLI** — Works with any agent that has terminal access (Claude Code, Cursor, ChatGPT). Available now.
+2. **MCP Connector** — Structured tool calls for Claude Code, Cursor, VS Code. Coming soon.
+3. **Skill** — Pre-built deploy workflow for Claude Code. Coming soon.
+4. **Context Doc** — Copy-paste document for any AI. Available now.
+
+## What's Included
+
+- Container build from git push (auto-detected Dockerfile)
+- Frontend + backend hosting in isolated Kubernetes namespaces
+- Dedicated PostgreSQL (CloudNativePG)
+- S3-compatible object storage (MinIO, 10GB included)
+- Custom domain + automatic TLS (Let's Encrypt via Traefik)
+- Real-time monitoring, logs, deployment history
+- CLI + MCP designed for AI agents
+
+## Links
+
+- Website: https://community.usectl.com
+- Setup guide: https://community.usectl.com/setup.html
+- Pricing: https://community.usectl.com/pricing.html
+- Agent integrations: https://community.usectl.com/agents/index.html
+- CLI reference: https://community.usectl.com/agents/cli.html
+- GitHub: https://github.com/systemctl-pro/usectl
+- Discord: https://discord.gg/BB3KpQPA

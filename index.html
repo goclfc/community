@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>usectl — One Prompt. Your Entire Project. Live.</title>
   <meta name="description" content="usectl is a deployment platform where your AI agent does everything. Tell Claude Code, Cursor, or ChatGPT to deploy your project — $39/month, everything included.">
+  <link rel="canonical" href="https://community.usectl.com/">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="usectl">
+  <meta property="og:title" content="usectl — One Prompt. Your Entire Project. Live.">
+  <meta property="og:description" content="usectl is a deployment platform where your AI agent does everything. Tell Claude Code, Cursor, or ChatGPT to deploy your project — $39/month, everything included.">
+  <meta property="og:url" content="https://community.usectl.com/">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@gochaberulava">
+  <meta name="twitter:title" content="usectl — One Prompt. Your Entire Project. Live.">
+  <meta name="twitter:description" content="usectl is a deployment platform where your AI agent does everything. Tell Claude Code, Cursor, or ChatGPT to deploy your project — $39/month, everything included.">
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "usectl",
+    "url": "https://community.usectl.com",
+    "description": "AI-agent-first deployment platform. One prompt to deploy your entire project.",
+    "sameAs": [
+      "https://github.com/systemctl-pro/usectl",
+      "https://x.com/gochaberulava",
+      "https://discord.gg/BB3KpQPA"
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/css/style.css">
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -288,6 +315,121 @@
       </div>
     </div>
   </section>
+
+  <!-- FAQ -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>What is usectl?</summary>
+          <p>usectl is a deployment platform that lets AI agents deploy your entire project with a single prompt. It includes server hosting, PostgreSQL database, S3-compatible storage, automatic SSL, custom domains, and push-to-deploy from GitHub — all for $39/month per project. It runs on K3s (Kubernetes) on Hetzner bare metal and is built by systemctl in Tbilisi, Georgia.</p>
+        </details>
+        <details>
+          <summary>How do I deploy a project with usectl?</summary>
+          <p>Install the CLI with <code>curl -fsSL https://usectl.com/install.sh | bash</code>, run <code>usectl login</code> to authenticate, connect your GitHub with <code>usectl github login</code>, then create and deploy your project with <code>usectl projects create</code> and <code>usectl projects deploy</code>. Your project will be live at an HTTPS URL in under 5 minutes. You can also paste a deploy prompt into any AI agent and let it handle everything.</p>
+        </details>
+        <details>
+          <summary>How much does usectl cost?</summary>
+          <p>usectl costs $39/month per project with everything included — no tiers, no usage meters, no feature gates. During the free beta, you can deploy at no cost. Founding members lock in $25/month per project forever when pricing launches.</p>
+        </details>
+        <details>
+          <summary>What AI agents work with usectl?</summary>
+          <p>usectl works with any AI coding agent that has terminal access, including Claude Code, Cursor, ChatGPT, Windsurf, and others. The CLI is designed for AI agent consumption with <code>--json</code> output on all commands. MCP connector and skill integrations for deeper agent integration are coming soon.</p>
+        </details>
+        <details>
+          <summary>What's included in each project?</summary>
+          <p>Every usectl project includes: container hosting with push-to-deploy from GitHub, dedicated PostgreSQL database (CloudNativePG), S3-compatible object storage (MinIO, 10GB), automatic SSL/TLS via Let's Encrypt, custom domain support, real-time monitoring and logs, and a CLI designed for both humans and AI agents.</p>
+        </details>
+        <details>
+          <summary>How is usectl different from Railway or Render?</summary>
+          <p>usectl is a self-hosted Railway/Render alternative that runs on dedicated Kubernetes infrastructure (K3s on Hetzner bare metal). Unlike Railway, there are no usage-based pricing surprises — $39/month covers everything including database and storage. Unlike Render, usectl is designed for AI agents first: your coding assistant can deploy, manage, and monitor your project through the CLI without you touching a dashboard. You get the same full-stack experience (hosting + database + storage + SSL) but at a flat, predictable price.</p>
+        </details>
+        <details>
+          <summary>Do I need a Dockerfile?</summary>
+          <p>Not always. usectl auto-detects Next.js, Node.js, and static sites and injects an appropriate Dockerfile automatically. For other frameworks like Go, Python, or Rust, you need a Dockerfile in your repo root.</p>
+        </details>
+        <details>
+          <summary>Can I use my own custom domain?</summary>
+          <p>Yes. Run <code>usectl domains add --project &lt;id&gt; --domain yourdomain.com</code> and add a CNAME record pointing to <code>usectl.app</code>. SSL certificates are provisioned automatically via Let's Encrypt and Traefik.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is usectl?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "usectl is a deployment platform that lets AI agents deploy your entire project with a single prompt. It includes server hosting, PostgreSQL database, S3-compatible storage, automatic SSL, custom domains, and push-to-deploy from GitHub — all for $39/month per project. It runs on K3s (Kubernetes) on Hetzner bare metal and is built by systemctl in Tbilisi, Georgia."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I deploy a project with usectl?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install the CLI with curl -fsSL https://usectl.com/install.sh | bash, run usectl login to authenticate, connect your GitHub with usectl github login, then create and deploy your project with usectl projects create and usectl projects deploy. Your project will be live at an HTTPS URL in under 5 minutes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does usectl cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "usectl costs $39/month per project with everything included — no tiers, no usage meters, no feature gates. During the free beta, you can deploy at no cost. Founding members lock in $25/month per project forever when pricing launches."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What AI agents work with usectl?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "usectl works with any AI coding agent that has terminal access, including Claude Code, Cursor, ChatGPT, Windsurf, and others. The CLI is designed for AI agent consumption with --json output on all commands. MCP connector and skill integrations are coming soon."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's included in each project?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every usectl project includes: container hosting with push-to-deploy from GitHub, dedicated PostgreSQL database (CloudNativePG), S3-compatible object storage (MinIO, 10GB), automatic SSL/TLS via Let's Encrypt, custom domain support, real-time monitoring and logs, and a CLI designed for both humans and AI agents."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is usectl different from Railway or Render?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "usectl is a self-hosted Railway/Render alternative that runs on dedicated Kubernetes infrastructure (K3s on Hetzner bare metal). Unlike Railway, there are no usage-based pricing surprises — $39/month covers everything including database and storage. Unlike Render, usectl is designed for AI agents first: your coding assistant can deploy, manage, and monitor your project through the CLI without you touching a dashboard. You get the same full-stack experience but at a flat, predictable price."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a Dockerfile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not always. usectl auto-detects Next.js, Node.js, and static sites and injects an appropriate Dockerfile automatically. For other frameworks like Go, Python, or Rust, you need a Dockerfile in your repo root."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use my own custom domain?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Run usectl domains add --project <id> --domain yourdomain.com and add a CNAME record pointing to usectl.app. SSL certificates are provisioned automatically via Let's Encrypt and Traefik."
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Footer -->
   <footer class="footer">

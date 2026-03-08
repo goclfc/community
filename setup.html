@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Setup Guide — usectl</title>
   <meta name="description" content="Deploy your first project with usectl. From zero to a live HTTPS URL in under 5 minutes.">
+  <link rel="canonical" href="https://community.usectl.com/setup.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="usectl">
+  <meta property="og:title" content="Setup Guide — usectl">
+  <meta property="og:description" content="Deploy your first project with usectl. From zero to a live HTTPS URL in under 5 minutes.">
+  <meta property="og:url" content="https://community.usectl.com/setup.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@gochaberulava">
+  <meta name="twitter:title" content="Setup Guide — usectl">
+  <meta name="twitter:description" content="Deploy your first project with usectl. From zero to a live HTTPS URL in under 5 minutes.">
   <link rel="stylesheet" href="/css/style.css">
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -22,6 +32,47 @@
     gtag('config', 'G-0KQ351KJPV');
   </script>
   <!-- End Google Analytics -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to deploy a project with usectl",
+    "description": "Deploy your first project with usectl. From zero to a live HTTPS URL in under 5 minutes.",
+    "totalTime": "PT5M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Install the CLI",
+        "text": "Run curl -fsSL https://usectl.com/install.sh | bash to download and install the usectl binary. On macOS, this may require sudo."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Log in",
+        "text": "Authenticate with your usectl account by running usectl login. This opens your browser for OAuth."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Connect GitHub",
+        "text": "Authorize the usectl GitHub App by running usectl github login. This is a one-time setup."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Create your project",
+        "text": "Create a new project with usectl projects create --name my-app --repo https://github.com/user/repo --domain my-app --port 3000. Add --database or --storage flags if needed."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Deploy",
+        "text": "Trigger a deployment with usectl projects deploy <project-id>. Watch build logs with usectl projects build-logs."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "You're live",
+        "text": "Your project is now running at https://my-app.usectl.app with automatic SSL. Push-to-deploy is active."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
