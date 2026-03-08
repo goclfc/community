@@ -1,3 +1,8 @@
 FROM nginx:alpine
-COPY index.html /usr/share/nginx/html/index.html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY css/ /usr/share/nginx/html/css/
+COPY js/ /usr/share/nginx/html/js/
+COPY agents/ /usr/share/nginx/html/agents/
+COPY docs/ /usr/share/nginx/html/docs/
+COPY *.html /usr/share/nginx/html/
 EXPOSE 80

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup Guide — usectl</title>
+  <meta name="description" content="Deploy your first project with usectl. From zero to a live HTTPS URL in under 5 minutes.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Doc Layout -->
+  <div class="doc-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Getting Started</h4>
+        <a href="/setup" class="active">Setup Guide</a>
+        <a href="/deploy-prompt">Deploy Prompt</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>For Agents</h4>
+        <a href="/agents">Agent Overview</a>
+        <a href="/docs/cli-reference">CLI Reference</a>
+        <a href="/docs/mcp">MCP</a>
+        <a href="/docs/skill">Skill</a>
+        <a href="/docs/context-doc">Context Doc</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Documentation</h4>
+        <a href="/docs/github-app">GitHub App</a>
+        <a href="/docs/troubleshooting">Troubleshooting</a>
+        <a href="/docs/architecture">Architecture</a>
+        <a href="/docs/database">Database</a>
+        <a href="/docs/storage">Storage</a>
+        <a href="/docs/domains">Domains</a>
+        <a href="/docs/dockerfile">Dockerfile</a>
+        <a href="/docs/env-vars">Env Vars</a>
+        <a href="/docs/monitoring">Monitoring</a>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="doc-content">
+      <h1>Deploy your first project</h1>
+      <p class="subtitle">From zero to a live HTTPS URL in under 5 minutes. Your AI agent can do this for you — or follow the steps manually.</p>
+
+      <p><strong>Quickest path:</strong> If you use Claude Code, Cursor, or ChatGPT — just paste the <a href="/deploy-prompt">deploy prompt</a> and let your agent handle everything below.</p>
+
+      <!-- Step 1 -->
+      <h2>Step 1 — Install the CLI</h2>
+      <p>Run the install script to download and set up the usectl binary:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>curl -fsSL https://usectl.com/install.sh | bash</code></pre>
+      </div>
+      <p>On macOS this requires <code>sudo</code>. If prompted, run with <code>sudo bash</code> instead.</p>
+      <p>Verify the installation:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl version</code></pre>
+      </div>
+
+      <!-- Step 2 -->
+      <h2>Step 2 — Log in</h2>
+      <p>Authenticate with your usectl account:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl login</code></pre>
+      </div>
+      <p>This opens your browser for OAuth. Once approved, the CLI stores your credentials locally.</p>
+
+      <!-- Step 3 -->
+      <h2>Step 3 — Connect GitHub</h2>
+      <p>Authorize the usectl GitHub App so the platform can access your repositories:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl github login</code></pre>
+      </div>
+      <p>This is a one-time setup. The GitHub App is installed on your account and grants access to the repos you select.</p>
+      <p>To add more repos later, find your installation ID and configure it on GitHub:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl github installations</code></pre>
+      </div>
+      <p>Then go to <code>https://github.com/settings/installations/&lt;ID&gt;</code> to manage repository access.</p>
+
+      <!-- Step 4 -->
+      <h2>Step 4 — Create your project</h2>
+      <p>Create a new project linked to your GitHub repository:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl projects create \
+  --name my-app \
+  --repo https://github.com/yourname/your-repo.git \
+  --domain my-app \
+  --port 3000</code></pre>
+      </div>
+      <p>Required flags:</p>
+      <ul>
+        <li><code>--name</code> — A unique name for your project</li>
+        <li><code>--repo</code> — The full GitHub repository URL</li>
+        <li><code>--domain</code> — The subdomain for your <code>.usectl.app</code> URL</li>
+        <li><code>--port</code> — The port your application listens on</li>
+      </ul>
+      <p>Optional flags:</p>
+      <ul>
+        <li><code>--database</code> — Provision a PostgreSQL database</li>
+        <li><code>--storage</code> — Provision S3-compatible object storage</li>
+      </ul>
+
+      <!-- Step 5 -->
+      <h2>Step 5 — Deploy</h2>
+      <p>Trigger a deployment:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl projects deploy &lt;project-id&gt;</code></pre>
+      </div>
+      <p>Watch the build logs in real time:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl projects build-logs &lt;project-id&gt; &lt;deployment-id&gt;</code></pre>
+      </div>
+      <p>Check the status of your project:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl projects status &lt;project-id&gt;</code></pre>
+      </div>
+
+      <!-- Step 6 -->
+      <h2>Step 6 — You're live</h2>
+      <p>Your project is now running at:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>URL</span>
+        </div>
+        <pre><code>https://my-app.usectl.app</code></pre>
+      </div>
+      <p>SSL is provisioned automatically. Push-to-deploy is active — every push to your default branch triggers a new deployment.</p>
+
+      <!-- Optional: Custom Domain -->
+      <h2>Optional — Custom domain</h2>
+      <p>Point your own domain at your project:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl domains add --project &lt;project-id&gt; --domain yourdomain.com</code></pre>
+      </div>
+      <p>TLS certificates are provisioned automatically via Let's Encrypt. See the <a href="/docs/domains">Domains guide</a> for DNS configuration details.</p>
+
+      <!-- Troubleshooting -->
+      <h2>Troubleshooting</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Problem</th>
+              <th>Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>"commit_hash is required"</code></td>
+              <td>GitHub App doesn't have access to the repo. Add it at GitHub Settings &rarr; Applications &rarr; usectl &rarr; Configure.</td>
+            </tr>
+            <tr>
+              <td>Install script needs sudo</td>
+              <td>Run: <code>curl -fsSL https://usectl.com/install.sh | sudo bash</code></td>
+            </tr>
+            <tr>
+              <td>Build fails with no Dockerfile</td>
+              <td>Add a Dockerfile to your repo root. Auto-detection supports Next.js, Node.js, and static sites.</td>
+            </tr>
+            <tr>
+              <td>502 on <code>github installations</code></td>
+              <td>Re-run <code>usectl github login</code> to refresh your GitHub authorization.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>For more help, see the full <a href="/docs/troubleshooting">Troubleshooting guide</a> or ask in <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>.</p>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

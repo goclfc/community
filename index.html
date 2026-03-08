@@ -3,348 +3,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>useclt - Deployment Bot</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0a;
-      color: #e5e5e5;
-      min-height: 100vh;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.5px;
-    }
-
-    .logo span { color: #3b82f6; }
-
-    nav a {
-      color: #a3a3a3;
-      text-decoration: none;
-      margin-left: 2rem;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
-    nav a:hover { color: #fff; }
-
-    .hero {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 6rem 2rem 4rem;
-      text-align: center;
-    }
-
-    .badge {
-      display: inline-block;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      color: #3b82f6;
-      padding: 0.35rem 1rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.1;
-      letter-spacing: -1.5px;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: #737373;
-      max-width: 520px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-    }
-
-    .cta-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.75rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: #3b82f6;
-      color: #fff;
-    }
-
-    .btn-primary:hover { background: #2563eb; }
-
-    .btn-secondary {
-      background: #1a1a1a;
-      color: #e5e5e5;
-      border: 1px solid #2a2a2a;
-    }
-
-    .btn-secondary:hover { background: #222; border-color: #3b82f6; }
-
-    .terminal {
-      max-width: 600px;
-      margin: 4rem auto 0;
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .terminal-bar {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0.75rem 1rem;
-      background: #161616;
-      border-bottom: 1px solid #222;
-    }
-
-    .terminal-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #333;
-    }
-
-    .terminal-body {
-      padding: 1.25rem 1.5rem;
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-      font-size: 0.85rem;
-      line-height: 1.8;
-    }
-
-    .terminal-body .prompt { color: #3b82f6; }
-    .terminal-body .cmd { color: #e5e5e5; }
-    .terminal-body .output { color: #525252; }
-    .terminal-body .success { color: #22c55e; }
-
-    .features {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 5rem 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .feature {
-      background: #111;
-      border: 1px solid #1a1a1a;
-      border-radius: 12px;
-      padding: 2rem;
-      transition: border-color 0.2s;
-    }
-
-    .feature:hover { border-color: #3b82f6; }
-
-    .feature-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: rgba(59, 130, 246, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature h3 {
-      color: #fff;
-      font-size: 1.05rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature p {
-      color: #737373;
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    .how-it-works {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 2rem 5rem;
-      text-align: center;
-    }
-
-    .how-it-works h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 3rem;
-      letter-spacing: -0.5px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      text-align: left;
-    }
-
-    .step-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #3b82f6;
-      margin-bottom: 0.5rem;
-    }
-
-    .steps h3 {
-      color: #fff;
-      font-size: 1rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .steps p {
-      color: #737373;
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }
-
-    footer {
-      border-top: 1px solid #1a1a1a;
-      padding: 2rem;
-      text-align: center;
-      color: #525252;
-      font-size: 0.85rem;
-    }
-
-    footer a {
-      color: #3b82f6;
-      text-decoration: none;
-    }
-  </style>
+  <title>usectl — One Prompt. Your Entire Project. Live.</title>
+  <meta name="description" content="usectl is a deployment platform where your AI agent does everything. Tell Claude Code, Cursor, or ChatGPT to deploy your project — $39/month, everything included.">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <header>
-    <div class="logo">use<span>clt</span></div>
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="https://github.com/useclt" target="_blank">GitHub</a>
-    </nav>
-  </header>
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
 
+  <!-- Hero -->
   <section class="hero">
-    <div class="badge">Open Source Deployment Bot</div>
-    <h1>Deploy with a<br>single command</h1>
-    <p>useclt is a bot that simplifies your deployment workflow. Push, build, and ship your apps without the hassle.</p>
-    <div class="cta-group">
-      <a href="https://github.com/useclt" class="btn btn-primary">Get Started</a>
-      <a href="#how-it-works" class="btn btn-secondary">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
-        See how it works
-      </a>
+    <div class="hero-badge">Open Source Deployment Platform</div>
+    <h1>One Prompt. Your<br>Entire Project. <span class="text-gradient">Live.</span></h1>
+    <p>usectl is a deployment platform where your AI agent does everything. Tell Claude Code, Cursor, or ChatGPT to deploy your project — the agent installs the CLI, sets up your server, database, storage, SSL, and hands you a live HTTPS URL.</p>
+    <div class="btn-group">
+      <a href="/setup" class="btn btn-primary">Get Started</a>
+      <a href="https://discord.gg/BB3KpQPA" class="btn btn-secondary" target="_blank">Join Discord</a>
     </div>
 
     <div class="terminal">
       <div class="terminal-bar">
-        <div class="terminal-dot"></div>
-        <div class="terminal-dot"></div>
-        <div class="terminal-dot"></div>
+        <div class="terminal-dot terminal-dot-red"></div>
+        <div class="terminal-dot terminal-dot-yellow"></div>
+        <div class="terminal-dot terminal-dot-green"></div>
       </div>
       <div class="terminal-body">
-        <div><span class="prompt">$</span> <span class="cmd">clt deploy --prod</span></div>
-        <div class="output">Detecting project... Next.js app found</div>
-        <div class="output">Building... done in 12s</div>
-        <div class="output">Deploying to production...</div>
-        <div class="success">&#10003; Live at https://your-app.useclt.dev</div>
+        <div><span class="prompt">$</span> <span class="cmd">usectl projects deploy my-saas-app</span></div>
+        <div class="output">Cloning github.com/user/my-saas-app...</div>
+        <div class="output">Building Docker image... done in 18s</div>
+        <div class="output">Provisioning PostgreSQL... ready</div>
+        <div class="output">Configuring SSL certificate... done</div>
+        <div class="success">&#10003; Live at https://my-saas-app.usectl.app</div>
       </div>
     </div>
   </section>
 
-  <section class="features" id="features">
-    <div class="feature">
-      <div class="feature-icon">&#9889;</div>
-      <h3>Zero Config</h3>
-      <p>Automatically detects your framework and configures the build. No YAML files, no setup wizards.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">&#128640;</div>
-      <h3>Instant Deploys</h3>
-      <p>Push to deploy in seconds. Every branch gets a unique preview URL for easy testing and reviews.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">&#128274;</div>
-      <h3>Built-in SSL</h3>
-      <p>Automatic HTTPS for every deployment. Custom domains with free SSL certificates, no extra steps.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">&#129302;</div>
-      <h3>Bot-Powered</h3>
-      <p>Integrates with GitHub, GitLab, and Slack. Get deploy notifications and trigger rollbacks via chat.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">&#127759;</div>
-      <h3>Edge Network</h3>
-      <p>Your app is served from the edge, close to your users. Fast load times everywhere in the world.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">&#128200;</div>
-      <h3>Logs & Metrics</h3>
-      <p>Real-time logs, deploy history, and performance metrics. Know exactly what's happening at all times.</p>
-    </div>
-  </section>
-
-  <section class="how-it-works" id="how-it-works">
-    <h2>How it works</h2>
-    <div class="steps">
-      <div>
-        <div class="step-num">01</div>
-        <h3>Install the CLI</h3>
-        <p>Run <code>npm i -g useclt</code> and authenticate with your account.</p>
+  <!-- Comparison -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>You're already paying too much to keep your project alive.</h2>
+        <p>Your current stack: $43+/month for PostgreSQL alone, around Full Stack is $85 and risky because its split across S3, your CI/CD provider, Supabase, Certbot pipelines, and some glitchy automation.</p>
       </div>
-      <div>
-        <div class="step-num">02</div>
-        <h3>Link your project</h3>
-        <p>Run <code>clt init</code> in your project root. We detect the framework automatically.</p>
-      </div>
-      <div>
-        <div class="step-num">03</div>
-        <h3>Deploy</h3>
-        <p>Run <code>clt deploy</code> and you're live. Set up Git hooks for automatic deploys on push.</p>
+      <div class="comparison">
+        <div class="comparison-card">
+          <h3>Fragmented Infrastructure</h3>
+          <div class="price">$43–90/mo</div>
+          <ul>
+            <li>VPS / server — $12/mo</li>
+            <li>Managed PostgreSQL — $19/mo</li>
+            <li>Object storage (R2) — $3/mo</li>
+            <li>CI/CD pipeline — $4/mo</li>
+            <li>Container registry — $4/mo</li>
+            <li>SSL + domain setup — hours</li>
+            <li>4–6 services to manage</li>
+          </ul>
+        </div>
+        <div class="comparison-card highlight">
+          <h3>All-in-One with usectl</h3>
+          <div class="price">$39/mo</div>
+          <ul>
+            <li>Everything you need to run your stack in One Place</li>
+            <li>Server + build pipeline</li>
+            <li>PostgreSQL database</li>
+            <li>S3-compatible storage</li>
+            <li>SSL + custom domains</li>
+            <li>Push-to-deploy from GitHub</li>
+            <li>Your agent deploys it all</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>
-    useclt &copy; 2026 &middot; <a href="https://github.com/useclt">GitHub</a>
+  <!-- 3 Steps -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Ship your project in <span class="text-gradient">three steps.</span></h2>
+        <p>No Heroku knowledge required. No server config. No YAML. Just.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Install + Connect</h3>
+          <p>Install the CLI. Log in. Connect your GitHub repository.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Create + Configure</h3>
+          <p>usectl auto-detects your framework. Add database or storage if needed.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Deploy + Ship</h3>
+          <p>One command. Your project builds, deploys, and goes live with HTTPS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deploy with Agent (Coming Soon) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="coming-soon">Coming Soon</span>
+        <h2 style="margin-top: 16px;">Deploy with your AI agent.</h2>
+        <p>Already using Claude, Cursor, or ChatGPT to build your code? Soon you'll be able to deploy it the same way — paste one prompt for your agent, answer a few questions, and your project is live in under 5 minutes.</p>
+      </div>
+      <div class="btn-group">
+        <a href="/deploy-prompt" class="btn btn-secondary">Preview Deploy Prompt</a>
+        <a href="/agents" class="btn btn-secondary">Agent Integrations</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Everything your project needs.<br><span class="text-gradient">Nothing you don't.</span></h2>
+      </div>
+      <div class="card-grid card-grid-3">
+        <div class="card">
+          <div class="card-icon">
+            <svg width="20" height="20" fill="none" stroke="#11a32a" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Push-to-Deploy</h3>
+          <p>Push to GitHub, your project auto-rebuilds and redeploys. Zero-touch CI/CD built in.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="20" height="20" fill="none" stroke="#11a32a" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>
+          </div>
+          <h3>PostgreSQL Database</h3>
+          <p>Dedicated PostgreSQL via CloudNativePG. Credentials auto-injected into your app.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="20" height="20" fill="none" stroke="#11a32a" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <h3>S3-Compatible Storage</h3>
+          <p>MinIO-powered object storage. Works with aws-sdk, boto3, and any S3 client.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="20" height="20" fill="none" stroke="#11a32a" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Custom Domains + HTTPS</h3>
+          <p>Automatic TLS via Let's Encrypt and Traefik. Add your domain with one CLI command.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="20" height="20" fill="none" stroke="#11a32a" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3>Real-Time Monitoring</h3>
+          <p>Live logs, CPU, memory, network metrics, and deployment history at your fingertips.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="20" height="20" fill="none" stroke="#11a32a" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>CLI + Bot Dashboard</h3>
+          <p>Full CLI designed for AI agents. Integrates with GitHub, Slack, and MCP-compatible clients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Teaser -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Simple pricing. <span class="text-gradient">No surprises.</span></h2>
+        <p>Pick the tier that matches your project. Upgrade or downgrade anytime.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="tier">Free</div>
+          <div class="amount">$0/month</div>
+          <div class="period">Beta access</div>
+        </div>
+        <div class="pricing-card">
+          <div class="tier">Free Beta</div>
+          <div class="amount">$0/month</div>
+          <div class="period">During beta</div>
+        </div>
+        <div class="pricing-card">
+          <div class="tier">App</div>
+          <div class="amount">$39/month</div>
+          <div class="period">Per project</div>
+        </div>
+        <div class="pricing-card featured">
+          <div class="tier">Full Stack</div>
+          <div class="amount">$39/month</div>
+          <div class="period">Everything included</div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="/pricing" class="btn btn-secondary">View Full Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founding Member CTA -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="founding-cta">
+        <h2>Join as a Founding Member</h2>
+        <p>Limited founding slots. Deploy free during beta. Lock in $25/mo per project when pricing launches — forever.</p>
+        <a href="https://discord.gg/BB3KpQPA" class="btn btn-primary" target="_blank">Become a Founding Member</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Infrastructure -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Serious infrastructure.<br><span class="text-gradient">Zero configuration.</span></h2>
+        <p>Kubernetes (K3s) on Hetzner bare metal. Isolated namespaces. CloudNativePG, MinIO, Traefik. Managed by us. Used by you and your agent.</p>
+      </div>
+      <div class="infra-icons">
+        <div class="infra-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="#94a3b8"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.2l8.5 4.9v9.8L12 21.8l-8.5-4.9V7.1L12 2.2z"/></svg>
+          <span>K3s</span>
+        </div>
+        <div class="infra-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="#94a3b8"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="#94a3b8" font-size="8" font-weight="bold">K</text></svg>
+          <span>Kaniko</span>
+        </div>
+        <div class="infra-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>
+          <span>CloudNativePG</span>
+        </div>
+        <div class="infra-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span>MinIO</span>
+        </div>
+        <div class="infra-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <span>Traefik</span>
+        </div>
+        <div class="infra-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="#94a3b8"/><circle cx="6" cy="18" r="1" fill="#94a3b8"/></svg>
+          <span>Hetzner</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
   </footer>
 
+  <script src="/js/main.js"></script>
 </body>
 </html>

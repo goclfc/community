@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI Reference — usectl</title>
+  <meta name="description" content="Complete CLI reference for usectl. Every command, every flag. Optimized for AI agent consumption.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents" class="active">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Doc Layout -->
+  <div class="doc-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Getting Started</h4>
+        <a href="/setup">Setup Guide</a>
+        <a href="/deploy-prompt">Deploy Prompt</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>For Agents</h4>
+        <a href="/agents">Agent Overview</a>
+        <a href="/agents/cli" class="active">CLI Reference</a>
+        <a href="/agents/mcp">MCP</a>
+        <a href="/agents/skill">Skill</a>
+        <a href="/agents/context">Context Doc</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Documentation</h4>
+        <a href="/docs/github-app">GitHub App</a>
+        <a href="/docs/troubleshooting">Troubleshooting</a>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="doc-content">
+      <h1>usectl CLI Reference</h1>
+      <p class="subtitle">Every command, every flag. Optimized for AI agent consumption.</p>
+
+      <!-- Install -->
+      <h2 id="install">Install</h2>
+      <p>Install the usectl CLI and verify it is available on your PATH.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>curl -fsSL https://usectl.com/install.sh | bash
+usectl version</code></pre>
+      </div>
+
+      <!-- Authentication -->
+      <h2 id="authentication">Authentication</h2>
+      <p>Log in to usectl and authorize GitHub access so the platform can clone your repositories.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>usectl login              # Opens browser for OAuth login
+usectl github login       # Authorizes GitHub App access</code></pre>
+      </div>
+
+      <!-- Projects -->
+      <h2 id="projects">Projects</h2>
+      <p>Create, manage, deploy, and monitor your projects.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>usectl projects list [--json]
+usectl projects create --name &lt;name&gt; --repo &lt;github-url&gt; --domain &lt;subdomain&gt; --port &lt;port&gt; [--database] [--storage]
+usectl projects get &lt;project-id&gt; [--json]
+usectl projects status &lt;project-id&gt;
+usectl projects deploy &lt;project-id&gt;
+usectl projects build-logs &lt;project-id&gt; &lt;deployment-id&gt;
+usectl projects logs &lt;project-id&gt; [--follow]
+usectl projects delete &lt;project-id&gt;</code></pre>
+      </div>
+
+      <!-- GitHub -->
+      <h2 id="github">GitHub</h2>
+      <p>Manage GitHub App installations and browse accessible repositories.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>usectl github installations [--json]
+usectl github repos --installation &lt;installation-id&gt; [--json]
+usectl github app-info [--json]</code></pre>
+      </div>
+
+      <!-- Domains -->
+      <h2 id="domains">Domains</h2>
+      <p>Add, list, and remove custom domains for your projects. SSL is provisioned automatically.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>usectl domains add --project &lt;project-id&gt; --domain &lt;domain&gt;
+usectl domains list --project &lt;project-id&gt;
+usectl domains remove --project &lt;project-id&gt; --domain &lt;domain&gt;</code></pre>
+      </div>
+
+      <!-- Environment Variables -->
+      <h2 id="env">Environment Variables</h2>
+      <p>Set, list, and remove environment variables. Changes take effect on the next deploy.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>usectl env set --project &lt;project-id&gt; KEY=value KEY2=value2
+usectl env list --project &lt;project-id&gt;
+usectl env remove --project &lt;project-id&gt; KEY</code></pre>
+      </div>
+
+      <!-- Common Patterns -->
+      <h2 id="common-patterns">Common Patterns for Agents</h2>
+      <p>A full deploy flow an AI agent can follow from start to finish.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash &mdash; full deploy flow</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># 1. Install CLI
+curl -fsSL https://usectl.com/install.sh | bash
+
+# 2. Authenticate
+usectl login
+usectl github login
+
+# 3. Find the GitHub installation and repo
+usectl github installations --json
+usectl github repos --installation &lt;installation-id&gt; --json
+
+# 4. Create the project
+usectl projects create \
+  --name my-app \
+  --repo https://github.com/user/my-app \
+  --domain my-app \
+  --port 3000 \
+  --database \
+  --storage
+
+# 5. Set environment variables
+usectl env set --project &lt;project-id&gt; NODE_ENV=production SECRET_KEY=abc123
+
+# 6. Deploy
+usectl projects deploy &lt;project-id&gt;
+
+# 7. Check status and logs
+usectl projects status &lt;project-id&gt;
+usectl projects logs &lt;project-id&gt; --follow</code></pre>
+      </div>
+
+      <!-- Error Handling -->
+      <h2 id="error-handling">Error Handling</h2>
+      <p>Common errors agents encounter and how to resolve them.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Error</th>
+              <th>Meaning</th>
+              <th>Agent Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>"commit_hash is required"</code></td>
+              <td>GitHub App can't access the repo</td>
+              <td>Tell user to add the repo to the GitHub App installation</td>
+            </tr>
+            <tr>
+              <td><code>"required flag(s) 'installation' not set"</code></td>
+              <td>Need installation ID first</td>
+              <td>Run <code>usectl github installations</code> first</td>
+            </tr>
+            <tr>
+              <td><code>"API error 502"</code></td>
+              <td>Temporary server issue</td>
+              <td>Retry after 5 seconds</td>
+            </tr>
+            <tr>
+              <td><code>"sudo: a terminal is required"</code></td>
+              <td>CLI install needs sudo</td>
+              <td>Tell user to run the install command manually</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

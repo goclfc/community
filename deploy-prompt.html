@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deploy with your AI agent — usectl</title>
+  <meta name="description" content="Copy this prompt, paste it into Claude Code, ChatGPT, Cursor, or any AI coding assistant. Answer a few questions. Your project goes live.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Doc Layout -->
+  <div class="doc-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Getting Started</h4>
+        <a href="/setup">Setup Guide</a>
+        <a href="/deploy-prompt" class="active">Deploy Prompt</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>For Agents</h4>
+        <a href="/agents">Agent Overview</a>
+        <a href="/docs/cli-reference">CLI Reference</a>
+        <a href="/docs/mcp">MCP</a>
+        <a href="/docs/skill">Skill</a>
+        <a href="/docs/context-doc">Context Doc</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Documentation</h4>
+        <a href="/docs/github-app">GitHub App</a>
+        <a href="/docs/troubleshooting">Troubleshooting</a>
+        <a href="/docs/architecture">Architecture</a>
+        <a href="/docs/database">Database</a>
+        <a href="/docs/storage">Storage</a>
+        <a href="/docs/domains">Domains</a>
+        <a href="/docs/dockerfile">Dockerfile</a>
+        <a href="/docs/env-vars">Env Vars</a>
+        <a href="/docs/monitoring">Monitoring</a>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="doc-content">
+      <h1>Deploy with your AI agent</h1>
+      <p class="subtitle">Copy this prompt, paste it into Claude Code, ChatGPT, Cursor, or any AI coding assistant. Answer a few questions. Your project goes live.</p>
+
+      <p><strong>Compatible with:</strong> Claude Code, ChatGPT, Cursor, Windsurf, Any AI assistant with terminal access</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>Deploy Prompt</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>You are helping me deploy my project to usectl — a managed deployment platform that handles everything automatically: building my app, provisioning databases, setting up file storage, and giving me a live HTTPS URL.
+
+Here is what I need you to do:
+
+**Step 1 — Install the usectl CLI**
+Run the following command to install usectl on my machine:
+  curl -fsSL https://usectl.com/install.sh | bash
+
+If it needs sudo, tell me to run it manually with sudo. Then verify:
+  usectl version
+
+**Step 2 — Log in**
+Log me into my usectl account:
+  usectl login
+
+If I don't have an account yet, tell me to sign up at usectl.com first.
+
+**Step 3 — Connect GitHub**
+Run: usectl github login
+This opens a browser to authorize the GitHub App. After I confirm, check:
+  usectl github installations
+
+If the repo I want to deploy isn't listed, tell me to add it at the GitHub App settings page.
+
+**Step 4 — Gather project info**
+Ask me:
+  1. What is your GitHub repository URL?
+  2. What port does your app listen on? (default: 3000)
+  3. Does your project need a PostgreSQL database? (yes/no)
+  4. Does your project need file storage (S3-compatible)? (yes/no)
+  5. Do you want a custom domain? (yes/no — if yes, what domain?)
+
+**Step 5 — Create the project**
+Using my answers:
+  usectl projects create \
+    --name &lt;SHORT_NAME&gt; \
+    --repo &lt;GITHUB_URL&gt; \
+    --domain &lt;SHORT_NAME&gt; \
+    --port &lt;PORT&gt; \
+    [--database] \
+    [--storage]
+
+**Step 6 — Deploy**
+Trigger deployment:
+  usectl projects deploy &lt;PROJECT_ID&gt;
+
+Check status until it's running:
+  usectl projects status &lt;PROJECT_ID&gt;
+
+**Step 7 — Custom domain (if needed)**
+  usectl domains add --project &lt;PROJECT_ID&gt; --domain &lt;DOMAIN&gt;
+Tell me what DNS record to add.
+
+**Step 8 — Confirm**
+Show me the live URL and confirm the project status.
+
+Throughout this process:
+- Explain each step before running commands
+- If any command fails, show the error and suggest a fix
+- If the GitHub App needs configuration, give me the exact URL to visit
+- Keep things simple</code></pre>
+      </div>
+
+      <p class="text-muted" style="margin-top: 24px; font-size: 0.9rem;">This prompt was tested end-to-end on March 8, 2026 with Claude Code.</p>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting — usectl docs</title>
+  <meta name="description" content="Common errors and fixes for usectl. Organized for both humans and AI agents.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Getting Started</h4>
+        <a href="/setup">Setup Guide</a>
+        <a href="/deploy-prompt">Deploy Prompt</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>For Agents</h4>
+        <a href="/agents">Agent Overview</a>
+        <a href="/agents/cli">CLI Reference</a>
+        <a href="/agents/mcp">MCP Connector</a>
+        <a href="/agents/skill">Skill</a>
+        <a href="/agents/doc">Context Doc</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Documentation</h4>
+        <a href="/docs/github-app">GitHub App</a>
+        <a href="/docs/troubleshooting" class="active">Troubleshooting</a>
+        <a href="/docs/architecture">Architecture</a>
+        <a href="/docs/database">Database</a>
+        <a href="/docs/storage">Storage</a>
+        <a href="/docs/domains">Domains</a>
+        <a href="/docs/dockerfile">Dockerfile</a>
+        <a href="/docs/env-vars">Env Vars</a>
+        <a href="/docs/monitoring">Monitoring</a>
+      </div>
+    </aside>
+
+    <main class="doc-content">
+      <h1>Troubleshooting</h1>
+      <p class="subtitle">Common errors and fixes, organized by category. Written so both humans and AI agents can quickly find solutions.</p>
+
+      <!-- Authentication -->
+      <h2>Authentication</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>not logged in</code> or <code>unauthorized</code></td>
+              <td>CLI session expired or not logged in</td>
+              <td>Run <code>usectl login</code></td>
+            </tr>
+            <tr>
+              <td><code>token expired</code></td>
+              <td>Auth token has expired</td>
+              <td>Run <code>usectl login</code> to re-authenticate</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- GitHub App -->
+      <h2>GitHub App</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>commit_hash is required (could not auto-resolve HEAD)</code></td>
+              <td>GitHub App can't access the repository</td>
+              <td>Go to <code>https://github.com/settings/installations/&lt;ID&gt;</code> and add the repo. If the project was created before connecting the app, delete and recreate it.</td>
+            </tr>
+            <tr>
+              <td><code>API error 502</code> on <code>github installations</code></td>
+              <td>GitHub token expired or invalid</td>
+              <td>Run <code>usectl github login</code> to refresh the token</td>
+            </tr>
+            <tr>
+              <td><code>required flag(s) "installation" not set</code></td>
+              <td>Command requires an installation ID</td>
+              <td>Run <code>usectl github installations --json</code> first to get the ID</td>
+            </tr>
+            <tr>
+              <td>Repo not showing in <code>github repos</code></td>
+              <td>Repo not added to GitHub App installation</td>
+              <td>Visit GitHub App settings and add the repository</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>See the full <a href="/docs/github-app">GitHub App guide</a> for detailed setup instructions.</p>
+
+      <!-- Installation -->
+      <h2>CLI Installation</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>sudo: a terminal is required to read the password</code></td>
+              <td>Install script needs sudo but can't prompt for password</td>
+              <td>Run manually: <code>curl -fsSL https://usectl.com/install.sh | sudo bash</code></td>
+            </tr>
+            <tr>
+              <td><code>usectl: command not found</code></td>
+              <td>Binary not in PATH</td>
+              <td>Check <code>/usr/local/bin/usectl</code> exists. If installed elsewhere, add the directory to your PATH.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Build & Deploy -->
+      <h2>Build & Deploy</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Build fails — no Dockerfile found</td>
+              <td>usectl couldn't auto-detect the framework</td>
+              <td>Add a <code>Dockerfile</code> to your repo root. Auto-detection supports Next.js, Node.js, and static sites only.</td>
+            </tr>
+            <tr>
+              <td>Build succeeds but app crashes</td>
+              <td>App crashes on startup (wrong port, missing env vars, etc.)</td>
+              <td>Check logs: <code>usectl projects logs &lt;id&gt;</code>. Verify <code>--port</code> matches what your app listens on.</td>
+            </tr>
+            <tr>
+              <td><code>Status: stopped (replicas: 0)</code></td>
+              <td>App was stopped or crashed repeatedly</td>
+              <td>Check logs for crash reason. Fix and redeploy, or run <code>usectl projects start &lt;id&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Deploy triggered but nothing happens</td>
+              <td>Build may be queued or failed silently</td>
+              <td>Check build logs: <code>usectl projects build-logs &lt;project-id&gt; &lt;deployment-id&gt;</code>. Get deployment ID from <code>usectl projects get &lt;id&gt; --json</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Domains -->
+      <h2>Domains & SSL</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Custom domain not working</td>
+              <td>DNS not configured or not propagated</td>
+              <td>Add a CNAME record pointing your domain to <code>usectl.app</code>. DNS propagation can take up to 48 hours.</td>
+            </tr>
+            <tr>
+              <td>SSL certificate not issued</td>
+              <td>DNS not resolving to usectl yet</td>
+              <td>Verify DNS with <code>dig yourdomain.com CNAME</code>. Certificate auto-provisions once DNS resolves.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Database -->
+      <h2>Database</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>App can't connect to database</td>
+              <td>DATABASE_URL not set or database not provisioned</td>
+              <td>Verify database was enabled: <code>usectl projects get &lt;id&gt; --json</code>. Check env vars: <code>usectl env list --project &lt;id&gt;</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Storage -->
+      <h2>Storage</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S3 upload fails</td>
+              <td>Storage not provisioned or credentials wrong</td>
+              <td>Verify storage was enabled. Check S3_ENDPOINT, S3_ACCESS_KEY, S3_SECRET_KEY in env vars.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Still Stuck?</h2>
+      <p>Join the <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a> for real-time help, or open an issue on <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>.</p>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

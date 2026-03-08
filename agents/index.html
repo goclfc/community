@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>usectl for AI Agents</title>
+  <meta name="description" content="How AI agents interact with usectl — CLI, MCP connector, skills, and context documents.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Getting Started</h4>
+        <a href="/setup">Setup Guide</a>
+        <a href="/deploy-prompt">Deploy Prompt</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>For Agents</h4>
+        <a href="/agents" class="active">Agent Overview</a>
+        <a href="/agents/cli">CLI Reference</a>
+        <a href="/agents/mcp">MCP Connector</a>
+        <a href="/agents/skill">Skill</a>
+        <a href="/agents/doc">Context Doc</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Documentation</h4>
+        <a href="/docs/github-app">GitHub App</a>
+        <a href="/docs/troubleshooting">Troubleshooting</a>
+        <a href="/docs/architecture">Architecture</a>
+        <a href="/docs/database">Database</a>
+        <a href="/docs/storage">Storage</a>
+        <a href="/docs/domains">Domains</a>
+        <a href="/docs/dockerfile">Dockerfile</a>
+        <a href="/docs/env-vars">Env Vars</a>
+        <a href="/docs/monitoring">Monitoring</a>
+      </div>
+    </aside>
+
+    <main class="doc-content">
+      <h1>usectl for AI Agents</h1>
+      <p class="subtitle">usectl is designed to be used by AI agents. There are four ways to integrate.</p>
+
+      <h2>1. CLI — Works with every agent today</h2>
+      <p>The usectl CLI is a Go binary that runs in any terminal. Every AI coding agent — Claude Code, Cursor, Windsurf, ChatGPT — already knows how to run CLI commands. No integration needed.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>Install</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>curl -fsSL https://usectl.com/install.sh | bash</code></pre>
+      </div>
+      <p><strong>Best for:</strong> Any agent with terminal access. Universal. Works today.</p>
+      <p><a href="/agents/cli" class="btn btn-secondary" style="margin-top: 8px;">CLI Reference &rarr;</a></p>
+
+      <h2>2. MCP Connector — Tighter integration</h2>
+      <p>The usectl MCP server exposes deploy, logs, status, and project management as tool calls inside MCP-compatible AI clients — Claude Code, VS Code, Cursor, Cowork.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>Setup for Claude Code</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>claude mcp add usectl npx @usectl/mcp-server --env USECTL_API_KEY=&lt;key&gt;</code></pre>
+      </div>
+      <p><strong>Best for:</strong> Claude Code, Cursor, and other MCP clients. Richer context. Structured tool calls.</p>
+      <p><a href="/agents/mcp" class="btn btn-secondary" style="margin-top: 8px;">MCP Documentation &rarr;</a></p>
+
+      <h2>3. Skill — Pre-built workflow</h2>
+      <p>The usectl skill is a pre-built workflow that guides the agent through the entire deploy process — from installing the CLI to verifying the project is live. No prompt engineering needed.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>Install in Claude Code</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>claude install usectl</code></pre>
+      </div>
+      <p><strong>Best for:</strong> Claude Code / Cowork users who want a one-click deploy experience.</p>
+      <p><a href="/agents/skill" class="btn btn-secondary" style="margin-top: 8px;">Skill Documentation &rarr;</a></p>
+
+      <h2>4. Context Doc — Paste into any agent</h2>
+      <p>A plain-text document you paste into any AI conversation to give the agent full context about usectl — what it is, how the CLI works, and how to deploy.</p>
+      <p><strong>Best for:</strong> ChatGPT, Gemini, or any agent that doesn't support MCP or skills. Works everywhere.</p>
+      <p><a href="/agents/doc" class="btn btn-secondary" style="margin-top: 8px;">Agent Context Doc &rarr;</a></p>
+
+      <h2>Which should I use?</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Method</th><th>Setup</th><th>Best For</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CLI</td>
+              <td>One install command</td>
+              <td>Any agent with a terminal</td>
+              <td><span style="color: #11a32a;">Available</span></td>
+            </tr>
+            <tr>
+              <td>MCP</td>
+              <td>One-line config</td>
+              <td>Claude Code, Cursor, VS Code</td>
+              <td><span class="coming-soon">Coming Soon</span></td>
+            </tr>
+            <tr>
+              <td>Skill</td>
+              <td>Plugin install</td>
+              <td>Claude Code, Cowork</td>
+              <td><span class="coming-soon">Coming Soon</span></td>
+            </tr>
+            <tr>
+              <td>Context Doc</td>
+              <td>Copy-paste</td>
+              <td>ChatGPT, Gemini, any AI</td>
+              <td><span style="color: #11a32a;">Available</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

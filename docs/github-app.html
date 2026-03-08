@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub App Setup — usectl docs</title>
+  <meta name="description" content="How to set up and troubleshoot the usectl GitHub App for repository access and push-to-deploy.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">use<span>ctl</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/agents">Agents</a></li>
+        <li><a href="/docs/troubleshooting">Docs</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a></li>
+        <li><a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Getting Started</h4>
+        <a href="/setup">Setup Guide</a>
+        <a href="/deploy-prompt">Deploy Prompt</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>For Agents</h4>
+        <a href="/agents">Agent Overview</a>
+        <a href="/agents/cli">CLI Reference</a>
+        <a href="/agents/mcp">MCP Connector</a>
+        <a href="/agents/skill">Skill</a>
+        <a href="/agents/doc">Context Doc</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Documentation</h4>
+        <a href="/docs/github-app" class="active">GitHub App</a>
+        <a href="/docs/troubleshooting">Troubleshooting</a>
+        <a href="/docs/architecture">Architecture</a>
+        <a href="/docs/database">Database</a>
+        <a href="/docs/storage">Storage</a>
+        <a href="/docs/domains">Domains</a>
+        <a href="/docs/dockerfile">Dockerfile</a>
+        <a href="/docs/env-vars">Env Vars</a>
+        <a href="/docs/monitoring">Monitoring</a>
+      </div>
+    </aside>
+
+    <main class="doc-content">
+      <h1>GitHub App Setup</h1>
+      <p class="subtitle">The GitHub App is how usectl accesses your repositories to clone code and trigger builds. This is the #1 friction point in the deploy flow — this guide covers setup and every known issue.</p>
+
+      <h2>What the GitHub App Does</h2>
+      <p>When you run <code>usectl projects deploy</code>, the platform needs to clone your repository. The GitHub App provides secure, scoped access to your repos without requiring personal access tokens.</p>
+      <p>The app requests read-only access to repository contents and metadata. It does not modify your code, create branches, or push commits.</p>
+
+      <h2>First-Time Setup</h2>
+      <p>Run the GitHub OAuth flow to link your GitHub account:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl github login</code></pre>
+      </div>
+      <p>This opens your browser to authorize the usectl GitHub App. After authorizing:</p>
+      <ol>
+        <li>Select which GitHub account or organization to install the app on</li>
+        <li>Choose <strong>"All repositories"</strong> or select specific repos</li>
+        <li>Click <strong>Install</strong></li>
+      </ol>
+      <p>Verify the installation:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl github installations --json</code></pre>
+      </div>
+      <p>You should see your account/org with an installation ID.</p>
+
+      <h2>Adding a New Repository</h2>
+      <p>If you created a new repo after installing the GitHub App, you need to add it to the installation:</p>
+      <ol>
+        <li>Find your installation ID:
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>bash</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>usectl github installations</code></pre>
+          </div>
+        </li>
+        <li>Go to: <code>https://github.com/settings/installations/&lt;INSTALLATION_ID&gt;</code></li>
+        <li>Under <strong>"Repository access"</strong>, click <strong>"Select repositories"</strong> and add the new repo</li>
+        <li>Click <strong>Save</strong></li>
+      </ol>
+
+      <h2>Verifying Repo Access</h2>
+      <p>List repos accessible by an installation:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>bash</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><code>usectl github repos --installation &lt;INSTALLATION_ID&gt; --json</code></pre>
+      </div>
+      <p>If your repo doesn't appear in the list, the GitHub App can't access it. Add it via the installation settings link above.</p>
+
+      <h2>Common Issues</h2>
+
+      <h3>"commit_hash is required (could not auto-resolve HEAD)"</h3>
+      <p>This is the most common error. It means the GitHub App cannot access the repository.</p>
+      <p><strong>Fix:</strong></p>
+      <ol>
+        <li>Run <code>usectl github installations</code> to get your installation ID</li>
+        <li>Go to <code>https://github.com/settings/installations/&lt;ID&gt;</code></li>
+        <li>Add the repository to the GitHub App</li>
+        <li>If the project was created before the app had access, delete and recreate it:
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>bash</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>usectl projects delete &lt;project-id&gt;
+usectl projects create --name my-app --repo https://github.com/user/repo.git --domain my-app --port 3000</code></pre>
+          </div>
+        </li>
+      </ol>
+
+      <h3>"API error 502" on github installations</h3>
+      <p>Your GitHub token may be expired or invalid.</p>
+      <p><strong>Fix:</strong> Re-authenticate with <code>usectl github login</code></p>
+
+      <h3>Project created but can't deploy</h3>
+      <p>If you created a project before connecting the GitHub App, the platform can't auto-detect the installation. Delete the project and recreate it after the GitHub App is properly configured.</p>
+
+      <h3>Organization repositories</h3>
+      <p>For org repos, the GitHub App must be installed on the <strong>organization</strong>, not just your personal account. An org admin may need to approve the installation.</p>
+
+      <h2>How It Works Internally</h2>
+      <p>When you create a project with <code>--repo</code>, usectl checks all your GitHub App installations to find one that has access to that repository. The installation ID is stored with the project.</p>
+      <p>On deploy, usectl uses the installation's credentials to clone the repo at the latest commit on your configured branch (default: <code>main</code>).</p>
+
+      <h2>Need Help?</h2>
+      <p>If you're still stuck, join the <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a> or open an issue on <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>.</p>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">use<span>ctl</span></div>
+        <div>Built by systemctl from Tbilisi, Georgia</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/BB3KpQPA" target="_blank">Discord</a>
+        <a href="https://x.com/gochaberulava" target="_blank">X</a>
+        <a href="https://github.com/systemctl-pro/usectl" target="_blank">GitHub</a>
+        <a href="https://usectl.com">usectl.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
